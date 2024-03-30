@@ -1,5 +1,7 @@
 package com.todo.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,10 @@ public class Todo {
 	private int t_id;
 	private String t_title;
 	private String t_desc;
-	private boolean t_isCompleted;
+	private boolean t_isCompleted=false;
+	private String createdOn=new Date().toLocaleString();
+	private String completedOn=null;
+	
 	public int getT_id() {
 		return t_id;
 	}
@@ -53,6 +58,18 @@ public class Todo {
 	public Todo() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getCompletedOn() {
+		return completedOn;
+	}
+	public void setCompletedOn(String completedOn) {
+		this.completedOn = completedOn;
 	}
 	
 	

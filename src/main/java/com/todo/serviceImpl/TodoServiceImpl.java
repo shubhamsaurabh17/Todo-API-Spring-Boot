@@ -1,6 +1,8 @@
 package com.todo.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,20 +31,35 @@ public class TodoServiceImpl implements TodoService{
 	    return orElseThrow;
 	}
 
-	@Override
-	public List<Todo> getAllTodo() {
-		List<Todo> getAllTodo = this.todoRepository.findAll();
-		return getAllTodo;
-	}
-
+	
 	@Override
 	public boolean deleteTodo(int id) throws MyCustomException {
 		Todo todo = getTodo(id);
 		if(todo!=null) {
-			this.todoRepository.delete(todo);
+//			this.todoRepository.delete(todo);
+			Date date=new Date();
+			todo.setT_isCompleted(true);
+			todo.setCompletedOn(date.toLocaleString());
+			this.todoRepository.save(todo);
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Todo> getAllIncompltedTodo() {
+	    List<Todo> allTodos = this.todoRepository.findAll();
+	    List<Todo> incompleteTodos = allTodos.stream()
+	                                         .filter(todo -> !todo.isT_isCompleted())
+	                                         .collect(Collectors.toList());
+	    return incompleteTodos;
+	}
+
+	@Override
+	public List<Todo> getAllCompletedTodo() {
+		List<Todo> findAll = this.todoRepository.findAll();
+		List<Todo> collect = findAll.stream().filter(todo->todo.isT_isCompleted()).collect(Collectors.toList());
+		return collect;
 	}
 
 }

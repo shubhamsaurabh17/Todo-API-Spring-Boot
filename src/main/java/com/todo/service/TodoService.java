@@ -12,7 +12,8 @@ public interface TodoService {
 	
 	Todo addTodo(Todo todo);
 	Todo getTodo(int t_id) throws MyCustomException;
-	List<Todo> getAllTodo();
+	List<Todo> getAllCompletedTodo();
 	boolean deleteTodo(int id) throws MyCustomException;
+	List<Todo> getAllIncompltedTodo();
 
 }
